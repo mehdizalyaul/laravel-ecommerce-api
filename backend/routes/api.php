@@ -29,3 +29,11 @@ Route::prefix('products')->group(function () {
         Route::delete('/{product}', [ProductController::class, 'destroy']);
     });
 });
+
+Route::middleware('auth:sanctum')->prefix('cart')->group(function () {
+    Route::get('/', [CartController::class, 'index']);
+    Route::post('/add', [CartController::class, 'add']);
+    Route::put('/update/{item}', [CartController::class, 'update']);
+    Route::delete('/remove/{item}', [CartController::class, 'remove']);
+    Route::delete('/clear', [CartController::class, 'clear']);
+});
