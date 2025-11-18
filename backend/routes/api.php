@@ -48,3 +48,14 @@ Route::middleware('auth:sanctum')->prefix('orders')->group(function () {
         Route::patch('/admin/{order}/status', [OrderController::class, 'updateStatus']);
     });
 });
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/upload', [UploadController::class, 'upload'])->middleware('admin');
+
+    Route::prefix('profile')->group(function () {
+        Route::get('/', [ProfileController::class, 'show']);
+        Route::put('/', [ProfileController::class, 'update']);
+    });
+});
+
+Route::get('/search', [SearchController::class, 'search']);
