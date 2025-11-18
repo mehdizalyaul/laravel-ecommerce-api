@@ -37,3 +37,14 @@ Route::middleware('auth:sanctum')->prefix('cart')->group(function () {
     Route::delete('/remove/{item}', [CartController::class, 'remove']);
     Route::delete('/clear', [CartController::class, 'clear']);
 });
+
+Route::middleware('auth:sanctum')->prefix('orders')->group(function () {
+    Route::post('/', [OrderController::class, 'store']);
+    Route::get('/', [OrderController::class, 'index']);
+    Route::get('/{order}', [OrderController::class, 'show']);
+
+    Route::middleware('admin')->group(function () {
+        Route::get('/admin/all', [OrderController::class, 'adminIndex']);
+        Route::patch('/admin/{order}/status', [OrderController::class, 'updateStatus']);
+    });
+});
